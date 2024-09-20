@@ -27,6 +27,7 @@ scoreboard players set @e[tag=CoilHeadRoot] lcmc.coilhead.isWatched 0
 execute as @a[tag=Player,tag=Alive] store result score @s lcmc.player.facing.X run data get entity @s Rotation[0]
 execute as @a[tag=Player,tag=Alive] store result score @s lcmc.player.facing.Y run data get entity @s Rotation[1]
 execute as @a[tag=Player,tag=Alive] at @s anchored eyes run function lcmc:player/logic/coil_in_fov
+tp @e[tag=FOVMarker] 0 0 0
 
 # Player Logic
 execute as @a[tag=Player,tag=Alive] at @s run function lcmc:player/logic/tick

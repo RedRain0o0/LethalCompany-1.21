@@ -39,6 +39,7 @@ scoreboard objectives add lcmc.eyelessDog.soundCoords.Y dummy
 scoreboard objectives add lcmc.eyelessDog.soundCoords.Z dummy
 
 scoreboard objectives add lcmc.coilhead.isWatched dummy
+scoreboard objectives add lcmc.coilhead.isVisible dummy
 
 # FOV Marker
 kill @e[tag=FOVMarker]

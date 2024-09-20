@@ -4,6 +4,7 @@
     "minecraft:pink_stained_glass_pane",
     "minecraft:iron_trapdoor",
     "#minecraft:air",
-    "#minecraft:flowers"
+    "#minecraft:flowers",
+    "minecraft:light"
   ]
 }
