@@ -1,0 +1,1 @@
+execute as @e[tag=dogListener,type=minecraft:warden] if data entity @s Brain.memories."minecraft:sonic_boom_cooldown".ttl run data modify entity @s Brain.memories."minecraft:sonic_boom_cooldown".ttl set value 10L
