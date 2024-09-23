@@ -23,15 +23,28 @@ execute as @e[tag=dogListener] if score @s lcmc.eyelessDog.listenerCooldown matc
 tellraw @a[tag=Debug] "<Server> Eyeless Dog Logic in `tick.mcfunction`"
 
 # Coilhead Logic
-scoreboard players set @e[tag=CoilHeadRoot] lcmc.coilhead.isWatched 0
-execute as @a[tag=Player,tag=Alive] store result score @s lcmc.player.facing.X run data get entity @s Rotation[0]
-execute as @a[tag=Player,tag=Alive] store result score @s lcmc.player.facing.Y run data get entity @s Rotation[1]
-execute as @a[tag=Player,tag=Alive] at @s anchored eyes run function lcmc:player/logic/coil_in_fov
-tp @e[tag=FOVMarker] 0 0 0
+function lcmc:enemy/coilhead/tick
+
+# Item Logic
+execute as @e[type=item,nbt={Item:{components:{"minecraft:custom_data":{BigBolt:1b}}}}] at @s run function lcmc:item/scrap/drop/big_bolt
+execute as @e[type=item,nbt={Item:{components:{"minecraft:custom_data":{CoiledCorpse:1b}}}}] at @s run function lcmc:item/scrap/drop/coiled_corpse
+execute as @e[tag=Item] unless items entity @s weapon.offhand * run kill @s
 
 # Player Logic
 execute as @a[tag=Player,tag=Alive] at @s run function lcmc:player/logic/tick
 tellraw @a[tag=Debug] "<Server> Player Logic in `tick.mcfunction`"
+execute as @e[tag=CoiledCorpse] if score @s lcmc.player.coilTimer matches 22 run data merge entity @s {ArmorItems:[{},{},{},{components:{"minecraft:custom_model_data":24},count:1,id:"minecraft:rotten_flesh"}]}
+execute as @e[tag=CoiledCorpse] if score @s lcmc.player.coilTimer matches 20 run data merge entity @s {ArmorItems:[{},{},{},{components:{"minecraft:custom_model_data":22},count:1,id:"minecraft:rotten_flesh"}]}
+execute as @e[tag=CoiledCorpse] if score @s lcmc.player.coilTimer matches 18 run data merge entity @s {ArmorItems:[{},{},{},{components:{"minecraft:custom_model_data":23},count:1,id:"minecraft:rotten_flesh"}]}
+execute as @e[tag=CoiledCorpse] if score @s lcmc.player.coilTimer matches 16 run data merge entity @s {ArmorItems:[{},{},{},{components:{"minecraft:custom_model_data":24},count:1,id:"minecraft:rotten_flesh"}]}
+execute as @e[tag=CoiledCorpse] if score @s lcmc.player.coilTimer matches 14 run data merge entity @s {ArmorItems:[{},{},{},{components:{"minecraft:custom_model_data":23},count:1,id:"minecraft:rotten_flesh"}]}
+execute as @e[tag=CoiledCorpse] if score @s lcmc.player.coilTimer matches 4 run data merge entity @s {ArmorItems:[{},{},{},{components:{"minecraft:custom_model_data":25},count:1,id:"minecraft:rotten_flesh"}]}
+execute as @e[tag=CoiledCorpse,tag=PlayerCorpse] if score @s lcmc.player.coilTimer matches 0 at @s run function lcmc:item/scrap/spawn/coiled_corpse
+execute as @e[tag=CoiledCorpse] if score @s lcmc.player.coilTimer matches 1.. run scoreboard players remove @s lcmc.player.coilTimer 1
+
+
+# Game Logic
+execute if score onMoon lcmc.game.gameState matches 1 run function lcmc:building/tick
+
 
 tellraw @a[tag=Debug] "<Server> Succesfully completed `tick.mcfunction`"
-

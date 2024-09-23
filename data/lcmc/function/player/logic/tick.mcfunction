@@ -8,6 +8,12 @@ execute if score @s lcmc.player.fallVelocity matches 0.. run scoreboard players 
 
 # Inventory
 execute store result score @s lcmc.player.selectedSlot run data get entity @s SelectedItemSlot
+
+execute unless items entity @s weapon.mainhand *[minecraft:custom_data~{HideArms:1b}] run item replace entity @s armor.legs with air
+execute unless items entity @s weapon.mainhand *[minecraft:custom_data~{HideArms:1b}] run item replace entity @s armor.chest from entity @s enderchest.26
+execute if items entity @s weapon.mainhand minecraft:rotten_flesh[minecraft:custom_data~{CoiledCorpse:1b}] run item replace entity @s armor.legs with chainmail_leggings
+execute if items entity @s weapon.mainhand *[minecraft:custom_data~{HideArms:1b}] run item replace entity @s armor.chest from entity @s enderchest.25
+
 # execute if score @s lcmc.player.previousSlot matches 8 if score @s lcmc.player.selectedSlot matches 0 run say Rollover
 # execute if score @s lcmc.player.previousSlot matches 0 if score @s lcmc.player.selectedSlot matches 8 run say Rollover
 
@@ -29,12 +35,14 @@ execute store result score @s lcmc.player.selectedSlot run data get entity @s Se
 # execute if score @s lcmc.player.scrollCooldown matches 1.. run scoreboard players remove @s lcmc.player.scrollCooldown 1
 # scoreboard players operation @s lcmc.player.previousSlot >< @s lcmc.player.selectedSlot
 
-title @s actionbar {"score":{"name":"@s","objective":"lcmc.player.facing.X"},"extra":[{"text":" "},{"score":{"name":"@s","objective":"lcmc.player.facing.Y"}}]}
+# title @s actionbar {"score":{"name":"@s","objective":"lcmc.player.facing.X"},"extra":[{"text":" "},{"score":{"name":"@s","objective":"lcmc.player.facing.Y"}}]}
 
 # Healing
 execute if score @s lcmc.player.healCooldown matches 1.. if score @s lcmc.player.health matches 1..19 run scoreboard players remove @s lcmc.player.healCooldown 1
 execute if score @s lcmc.player.health matches 1..19 unless score @s lcmc.player.healCooldown matches 1.. run scoreboard players add @s lcmc.player.health 1
 execute if score @s lcmc.player.health matches 1..19 if score @s lcmc.player.healCooldown matches 0 run scoreboard players set @s lcmc.player.healCooldown 20
 execute if score @s lcmc.player.health matches 20.. if score @s lcmc.player.healCooldown matches 0 run scoreboard players set @s lcmc.player.healCooldown 20
+
+
 
 tellraw @a[tag=Debug] "<Server> Succesfully completed `player/logic/tick.mcfunction`"

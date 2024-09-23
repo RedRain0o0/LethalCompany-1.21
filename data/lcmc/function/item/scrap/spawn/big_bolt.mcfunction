@@ -1,0 +1,2 @@
+data merge entity @s {Tags:['Scrap','Item','BigBolt'],DisabledSlots:17,Invulnerable:1b,ShowArms:1b,Small:1b,Invisible:1b,PersistenceRequired:1b,HandItems:[{},{id:"minecraft:netherite_scrap",count:1b,components:{custom_name:'{"translate":"scrap.lc.big_bolt","italic":false}',custom_model_data:1,custom_data:{Sellable:1b,BigBolt:1b,Weight:19}}}],ArmorItems:[{},{},{},{id:"minecraft:netherite_scrap",count:1b,components:{custom_model_data:1}}]}
+execute store result entity @s HandItems[1].components.minecraft:custom_data.value int 1 run random value 20..32
