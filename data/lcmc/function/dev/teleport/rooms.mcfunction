@@ -1,0 +1,1 @@
+execute in lcmc:rooms run tp @s 0 0 0 0 0

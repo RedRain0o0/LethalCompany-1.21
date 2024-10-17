@@ -1,0 +1,1 @@
+execute in lcmc:company_planet run tp @s 0 0 0 0 0

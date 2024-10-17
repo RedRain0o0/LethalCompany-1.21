@@ -6,7 +6,7 @@
         "damage": {
           "source_entity": {
             "type": "minecraft:husk",
-            "nbt": "{Tags:['CoilHeadRoot']}"
+            "nbt": "{Tags:['lcmc.entity.CoilHeadRoot']}"
           }
         }
       }

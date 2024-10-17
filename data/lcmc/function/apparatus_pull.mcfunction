@@ -1,0 +1,3 @@
+scoreboard objectives setdisplay sidebar lcmc.display.apparatusPull
+
+scoreboard objectives setdisplay sidebar

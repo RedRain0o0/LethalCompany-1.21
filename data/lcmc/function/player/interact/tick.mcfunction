@@ -1,0 +1,2 @@
+execute if score @s lcmc.player.logic.currInteract = @s lcmc.player.logic.prevInteract run scoreboard players set @s lcmc.player.logic.currInteract 0
+scoreboard players operation @s lcmc.player.logic.prevInteract = @s lcmc.player.logic.currInteract

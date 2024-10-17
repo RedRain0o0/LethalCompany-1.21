@@ -1,1 +1,0 @@
-execute store result score @s lcmc.player.selectedSlot run data get entity @s SelectedItemSlot

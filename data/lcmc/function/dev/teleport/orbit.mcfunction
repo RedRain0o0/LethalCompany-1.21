@@ -1,0 +1,1 @@
+execute in lcmc:orbit run tp @s 0 0 0 0 0
