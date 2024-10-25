@@ -22,6 +22,9 @@ tellraw @a[tag=lcmc.player.Debug] "<Server> Eyeless Dog Logic in `tick.mcfunctio
 # Coilhead Logic
 execute as @e[tag=lcmc.entity.CoilHeadRoot] run function lcmc:enemy/coilhead/tick
 
+# Trap Logic
+execute as @e[tag=lcmc.trap.LandMine] at @s run function lcmc:trap/landmine/tick
+
 # Player Logic
 execute as @a[tag=lcmc.player.Player,tag=lcmc.player.Alive] at @s run function lcmc:player/logic/tick
 tellraw @a[tag=lcmc.player.Debug] "<Server> Player Logic in `tick.mcfunction`"

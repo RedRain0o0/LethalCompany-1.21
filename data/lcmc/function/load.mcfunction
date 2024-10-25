@@ -24,8 +24,14 @@ scoreboard objectives add lcmc.player.interactTimer dummy
 scoreboard objectives add lcmc.player.location dummy
 scoreboard objectives add lcmc.player.insanity dummy
 scoreboard objectives add lcmc.player.fear dummy
+scoreboard objectives add lcmc.player.stoodMine dummy
 
 scoreboard objectives add lcmc.display.apparatusPull dummy
+
+# Traps
+scoreboard objectives add lcmc.logic.id dummy
+scoreboard objectives add lcmc.trap.landmine.beepTimer dummy
+scoreboard objectives add lcmc.trap.landmine.explodeTimer dummy
 
 # Math/Logic
 scoreboard objectives add lcmc.logic.onGroundCurr dummy
@@ -41,6 +47,7 @@ scoreboard players add indoorEntityValue lcmc.game.gameState 0
 scoreboard objectives add lcmc.logic.currTick dummy
 scoreboard objectives add lcmc.logic.prevTick dummy
 scoreboard objectives add lcmc.logic.predictedTick5TicksIntoTheFuture dummy
+scoreboard objectives add lcmc.logic.disposable dummy
 scoreboard objectives add lcmc.math.numbers dummy
 scoreboard players set -1 lcmc.math.numbers -1
 scoreboard players set 0 lcmc.math.numbers 0
@@ -71,6 +78,8 @@ scoreboard objectives add lcmc.player.logic.insanityIncrease dummy
 scoreboard objectives add lcmc.player.logic.hallucinationTimer dummy
 scoreboard objectives add lcmc.enemy.logic.attackCooldown dummy
 scoreboard objectives add lcmc.item.logic.kickCooldown dummy
+scoreboard objectives add lcmc.trap.logic.prevLandMine dummy
+scoreboard objectives add lcmc.trap.logic.currLandMine dummy
 #scoreboard objectives add lcmc.item.logic.flashLight dummy
 
 # Enemies
@@ -97,16 +106,23 @@ scoreboard objectives add lcmc.coilhead.isVisible dummy
 scoreboard objectives add lcmc.coilhead.wasVisible dummy
 
 scoreboard objectives add lcmc.enemy.test dummy
-scoreboard players set attackDamage lcmc.enemy.coilhead 90
-scoreboard players set attackCooldown lcmc.enemy.coilhead 4
-scoreboard players set doorSpeed lcmc.enemy.coilhead 12
-scoreboard players set powerLevel lcmc.enemy.coilhead 1
-scoreboard players set maxAmount lcmc.enemy.coilhead 5
-scoreboard players add currAmount lcmc.enemy.coilhead 0
-scoreboard players set dangerLevel lcmc.enemy.coilhead 80
-scoreboard players set residesIn lcmc.enemy.coilhead 1
+scoreboard objectives add lcmc.enemy.test.id dummy
+scoreboard players set speed lcmc.enemy.test 25
+scoreboard players set searchRadius lcmc.enemy.test 100
+scoreboard players set attackDamage lcmc.enemy.test 90
+scoreboard players set attackDamage lcmc.enemy.test 90
+scoreboard players set attackCooldown lcmc.enemy.test 4
+scoreboard players set doorSpeed lcmc.enemy.test 12
+scoreboard players set powerLevel lcmc.enemy.test 1
+scoreboard players set maxAmount lcmc.enemy.test 5
+scoreboard players add currAmount lcmc.enemy.test 0
+scoreboard players set dangerLevel lcmc.enemy.test 80
+scoreboard players set residesIn lcmc.enemy.test 1
 
 scoreboard objectives add lcmc.enemy.listenerLogic dummy
+scoreboard objectives add lcmc.enemy.ai.lookingForPath dummy
+scoreboard objectives add lcmc.enemy.ai.canSeeNext dummy
+scoreboard objectives add lcmc.enemy.ai.pathIndex dummy
 
 # Ship
 scoreboard objectives add lcmc.ship.map.targetPosition dummy
@@ -116,6 +132,7 @@ scoreboard objectives add lcmc.ship.teleporter dummy
 scoreboard objectives add lcmc.ship.reverseTeleporter dummy
 scoreboard objectives add lcmc.ship.signalTransmitter dummy
 scoreboard objectives add lcmc.ship.loudHorn dummy
+scoreboard objectives add lcmc.ship.transmitter dummy
 
 # Triggers
 scoreboard objectives add lcmc.player.action.dance trigger
@@ -136,11 +153,12 @@ scoreboard players set onMoon lcmc.game.gameState 0
 
 
 # Boss Bars
-bossbar add lcmc.game.logic.time {"text": "Time of Day"}
-bossbar add lcmc.player.gui.1 {"text": "\u0001","font": "lc:inventory"}
-bossbar add lcmc.player.gui.2 {"text": "Battery"}
-bossbar add lcmc.player.gui.3 {"text": "Battery"}
-bossbar add lcmc.player.gui.4 {"text": "Battery"}
+bossbar add lcmc:game.logic.time {"text": "Time of Day"}
+bossbar add lcmc:player.gui.1 {"text": "\u0001","font": "lc:inventory"}
+bossbar add lcmc:player.gui.2 {"text": "Battery"}
+bossbar add lcmc:player.gui.3 {"text": "Battery"}
+bossbar add lcmc:player.gui.4 {"text": "Battery"}
+bossbar add lcmc:player.transmitter {"text": ""}
 
 # FOV Marker
 kill @e[tag=lcmc.logic.FOVMarker]
