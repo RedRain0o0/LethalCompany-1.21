@@ -1,0 +1,1 @@
+data modify storage lcmc:disposable cmd.totest set from storage lcmc:disposable cmd.program

@@ -13,6 +13,6 @@ execute as @e[tag=lcmc.logic.FOVMarker] if score @s lcmc.player.moddedFacing.Y m
 scoreboard players set .hit lcmc.player.logic.raycast 0
 scoreboard players set .distance lcmc.player.logic.raycast 0
 scoreboard players set @s lcmc.coilhead.isVisible 0
-execute if score @s lcmc.coilhead.inFOV matches 1 as @e[tag=lcmc.logic.FOVMarker] at @s run function lcmc:enemy/coilhead/raycast
+execute if score @s lcmc.coilhead.inFOV matches 1 as @e[tag=lcmc.logic.FOVMarker] at @s run function lcmc:entity/coilhead/raycast
 
 tag @s remove lcmc.entity.logic.CurrentCoil

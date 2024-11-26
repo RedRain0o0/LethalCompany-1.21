@@ -1,1 +1,0 @@
-execute if score indoorEntityValue lcmc.game.gameState matches 1..3 summon husk at @s run function lcmc:enemy/coilhead/spawn

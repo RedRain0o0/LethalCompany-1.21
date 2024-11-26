@@ -1,0 +1,1 @@
+data modify entity @e[tag=TerminalDisplayText,limit=1] text set value '{"text":"---------------------------------\\n\\n\\n","color":"green","extra":[{"text":"Please type which moon you want to route to.\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n"}]}'

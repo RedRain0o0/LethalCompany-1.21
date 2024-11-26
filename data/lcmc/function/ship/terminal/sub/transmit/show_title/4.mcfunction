@@ -1,0 +1,1 @@
+$bossbar set lcmc:player.transmitter name $(output)

@@ -1,32 +1,47 @@
 tellraw @a[tag=lcmc.player.Debug] "<Server> Begining `tick.mcfunction`"
 
-# Pre Light Logic
+## Pre Light Logic
 execute at @e[tag=lcmc.logic.light.LightSpawn] run setblock ~ ~ ~ air
 kill @e[tag=lcmc.logic.light.LightSpawn]
 tellraw @a[tag=lcmc.player.Debug] "<Server> Pre Light Logic in `tick.mcfunction`"
 
-# Item Pickup
+## Item Pickup
 #execute as @e[type=armor_stand,tag=lcmc.type.Item,predicate=lcmc:item/kill_hold] run kill @s
 tellraw @a[tag=lcmc.player.Debug] "<Server> Item Pickup in `tick.mcfunction`"
 
 effect clear @a[tag=lcmc.player.Player,tag=lcmc.player.Alive] darkness
 
-function lcmc:enemy/logic/anger_managment
-execute as @e[tag=lcmc.entity.Listener] at @s run function lcmc:enemy/logic/listener_tick
+function lcmc:entity/logic/anger_managment
+execute as @e[tag=lcmc.entity.Listener] at @s run function lcmc:entity/logic/listener_tick
 
-# Eyeless Dog Logic
-execute as @e[tag=lcmc.entity.eyelessDog.Listener] unless score @s lcmc.eyelessDog.listenerCooldown matches 1.. run function lcmc:enemy/eyelessdog/listener_location
+## Signal Transmitter
+execute if score inProgress lcmc.ship.transmitter matches 1 run function lcmc:ship/terminal/sub/transmit/show_title/1
+execute if score endTimer lcmc.ship.transmitter matches 1 run function lcmc:ship/terminal/sub/transmit/clear
+execute if score endTimer lcmc.ship.transmitter matches 6 as @a at @s run playsound lcmc:player.signal_transmitter.finish player @s ~ ~ ~
+execute if score endTimer lcmc.ship.transmitter matches 1.. run scoreboard players remove endTimer lcmc.ship.transmitter 1
+
+## Eyeless Dog Logic
+execute as @e[tag=lcmc.entity.eyelessDog.Listener] unless score @s lcmc.eyelessDog.listenerCooldown matches 1.. run function lcmc:entity/eyelessdog/listener_location
 execute as @e[tag=lcmc.entity.eyelessDog.Listener] if score @s lcmc.eyelessDog.listenerCooldown matches 1.. run scoreboard players remove @s lcmc.eyelessDog.listenerCooldown 1
 tellraw @a[tag=lcmc.player.Debug] "<Server> Eyeless Dog Logic in `tick.mcfunction`"
 
-# Coilhead Logic
-execute as @e[tag=lcmc.entity.CoilHeadRoot] run function lcmc:enemy/coilhead/tick
+## Coilhead Logic
+execute as @e[tag=lcmc.entity.CoilHeadRoot] run function lcmc:entity/coilhead/tick
 
-# Trap Logic
+## Trap Logic
 execute as @e[tag=lcmc.trap.LandMine] at @s run function lcmc:trap/landmine/tick
 
-# Player Logic
-execute as @a[tag=lcmc.player.Player,tag=lcmc.player.Alive] at @s run function lcmc:player/logic/tick
+## Terminal Logic
+execute if score onMoon lcmc.game.gameState matches 0 unless entity @a[tag=lcmc.ship.terminal.User] as @e[tag=lcmc.ship.Terminal] at @s on target run function lcmc:ship/terminal/open
+execute if entity @a[tag=lcmc.ship.terminal.User] as @e[tag=lcmc.ship.Terminal] at @s on target as @s[tag=lcmc.ship.terminal.User] run function lcmc:ship/terminal/keyboard
+execute if entity @a[tag=lcmc.ship.terminal.User] run function lcmc:ship/terminal/tick
+execute as @e[tag=lcmc.ship.Terminal] at @s on target as @n[tag=lcmc.ship.Terminal] run data remove entity @s interaction
+
+## Player Logic
+execute as @a[tag=lcmc.player.Player,tag=lcmc.player.Alive,tag=lcmc.player.Player.1] at @s run function lcmc:player/logic/tick {player: 1}
+execute as @a[tag=lcmc.player.Player,tag=lcmc.player.Alive,tag=lcmc.player.Player.2] at @s run function lcmc:player/logic/tick {player: 2}
+execute as @a[tag=lcmc.player.Player,tag=lcmc.player.Alive,tag=lcmc.player.Player.3] at @s run function lcmc:player/logic/tick {player: 3}
+execute as @a[tag=lcmc.player.Player,tag=lcmc.player.Alive,tag=lcmc.player.Player.4] at @s run function lcmc:player/logic/tick {player: 4}
 tellraw @a[tag=lcmc.player.Debug] "<Server> Player Logic in `tick.mcfunction`"
 execute as @e[tag=lcmc.player.corpse.CoiledCorpse] if score @s lcmc.player.coilTimer matches 22 run data merge entity @s {ArmorItems:[{},{},{},{components:{"minecraft:custom_model_data":24},count:1,id:"minecraft:rotten_flesh"}]}
 execute as @e[tag=lcmc.player.corpse.CoiledCorpse] if score @s lcmc.player.coilTimer matches 20 run data merge entity @s {ArmorItems:[{},{},{},{components:{"minecraft:custom_model_data":22},count:1,id:"minecraft:rotten_flesh"}]}
@@ -43,7 +58,13 @@ scoreboard players operation prevPlayerCount lcmc.game.gameState = playerCount l
 
 #execute as @a if score @s lcmc.player.leaveGame matches 1.. run function lcmc:player/logic/leave_game
 
-# Item Logic
+## Water Logic
+execute \
+  as @e[tag=lcmc.entity.CanDrown] \
+  at @s \
+  run function lcmc:game/water/entity_tick
+
+## Item Logic
 function #lcmc:drop_logic
 
 execute as @e[tag=lcmc.type.Item] store result score @s lcmc.logic.onGroundCurr run data get entity @s OnGround
@@ -65,7 +86,7 @@ execute as @e[tag=lcmc.player.Corpse] unless items entity @s weapon.offhand * ru
 
 execute as @e[tag=lcmc.type.Item] unless items entity @s weapon.offhand * run kill @s
 
-# Map Logic
+## Map Logic
 execute as @e[tag=lcmc.ship.map.Target] at @s align xyz positioned ~.5 ~.5 ~.5 run function lcmc:ship/map/target_tick
 execute as @e[tag=lcmc.ship.map.Marker] at @s unless block ~ ~ ~ #air run function lcmc:ship/map/store_to_map
 execute as @e[tag=lcmc.ship.interact.ChangeTarget] at @s on target as @n run function lcmc:ship/map/change_target
@@ -75,11 +96,27 @@ execute as @e[tag=lcmc.ship.map.Target,tag=lcmc.ship.teleporter.CanTeleport] at 
 execute as @e[tag=lcmc.ship.map.Target,tag=lcmc.ship.teleporter.CanTeleport] at @e[tag=lcmc.ship.Teleporter] if score teleporterCountdown lcmc.ship.teleporter matches 0 run tp @s ~ ~ ~
 execute if score teleporterCountdown lcmc.ship.teleporter matches 0 run scoreboard players reset teleporterCountdown lcmc.ship.teleporter
 
-# Light Logic
-execute as @a[tag=lcmc.player.Player,tag=lcmc.player.Alive,tag=lcmc.item.flashlight.RayCaster] run function lcmc:item/equipment/logic/flashlight/raycast
-execute at @e[tag=lcmc.item.flashlight.LightSpot] if block ~ ~ ~ air run setblock ~ ~ ~ light[level=7]
+## Light Logic
+scoreboard players set hit lcmc.player.logic.raycast 0
+scoreboard players set distance lcmc.player.logic.raycast 0
+execute as @a[tag=lcmc.player.Player,tag=lcmc.player.Alive,tag=lcmc.player.logic.FlashlightOn] at @s anchored eyes run function lcmc:item/equipment/logic/flashlight/raycast
+execute at @e[tag=lcmc.item.logic.flashlight.Light.1] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=1]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.2] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=2]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.3] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=3]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.4] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=4]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.5] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=5]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.6] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=6]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.7] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=7]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.8] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=8]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.9] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=9]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.10] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=10]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.11] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=11]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.12] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=12]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.13] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=13]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.14] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=14]
+execute at @e[tag=lcmc.item.logic.flashlight.Light.15] if block ~ ~ ~ #lcmc:air_light run setblock ~ ~ ~ light[level=15]
 
-# Game Logic
+## Game Logic
 #execute if score onMoon lcmc.game.gameState matches 1 run function lcmc:building/tick
 execute if score onMoon lcmc.game.gameState matches 1 run function lcmc:game/tick
 

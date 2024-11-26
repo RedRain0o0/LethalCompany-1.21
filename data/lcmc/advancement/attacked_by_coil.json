@@ -13,6 +13,6 @@
     }
   },
   "rewards": {
-    "function": "lcmc:enemy/coilhead/attack_player"
+    "function": "lcmc:entity/coilhead/attack_player"
   }
 }

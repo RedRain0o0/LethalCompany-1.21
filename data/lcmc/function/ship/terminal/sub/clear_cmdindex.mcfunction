@@ -1,0 +1,1 @@
+$data modify storage lcmc:terminal cmd.cmd$(index) set value ''

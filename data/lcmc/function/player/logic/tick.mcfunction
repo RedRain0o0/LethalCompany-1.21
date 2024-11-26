@@ -1,19 +1,57 @@
-# Fall Time
+## Fall Time
 execute store result score @s lcmc.logic.onGroundCurr run data get entity @s OnGround
 execute store result score @s lcmc.player.fallVelocity run data get entity @s Motion[1] 1000
 execute unless score @s lcmc.logic.onGroundCurr matches 1 if score @s lcmc.player.fallVelocity matches ..-1 run scoreboard players add @s lcmc.player.fallTime 1
-execute if score @s lcmc.logic.onGroundCurr matches 1 if score @s lcmc.player.fallTime matches 20.. run scoreboard players remove @s lcmc.player.health 10
+$execute store result entity @n[tag=lcmc.player.logic.FallMarker,tag=lcmc.player.Player.$(player)] Pos[0] double 0.01 run data get entity @s Pos[0] 100
+$execute store result entity @n[tag=lcmc.player.logic.FallMarker,tag=lcmc.player.Player.$(player)] Pos[2] double 0.01 run data get entity @s Pos[2] 100
+#$tp @n[tag=lcmc.player.logic.FallMarker,tag=lcmc.player.Player.$(player)] ~ ~ ~
+
+$execute if score @s lcmc.logic.onGroundCurr matches 1 if score @s lcmc.player.fallTime matches 1.. at @n[tag=lcmc.player.logic.FallMarker,tag=lcmc.player.Player.$(player)] as @s[distance=21.7..24.8] run scoreboard players remove @s lcmc.player.health 30
+$execute if score @s lcmc.logic.onGroundCurr matches 1 if score @s lcmc.player.fallTime matches 1.. at @n[tag=lcmc.player.logic.FallMarker,tag=lcmc.player.Player.$(player)] as @s[distance=24.8..27.9] run scoreboard players remove @s lcmc.player.health 50
+$execute if score @s lcmc.logic.onGroundCurr matches 1 if score @s lcmc.player.fallTime matches 1.. at @n[tag=lcmc.player.logic.FallMarker,tag=lcmc.player.Player.$(player)] as @s[distance=27.9..29.8] run scoreboard players remove @s lcmc.player.health 80
+$execute if score @s lcmc.logic.onGroundCurr matches 1 if score @s lcmc.player.fallTime matches 1.. at @n[tag=lcmc.player.logic.FallMarker,tag=lcmc.player.Player.$(player)] as @s[distance=29.8..] run scoreboard players remove @s lcmc.player.health 100
+
+$execute unless score @s lcmc.player.fallVelocity matches ..-1 store result entity @n[tag=lcmc.player.logic.FallMarker,tag=lcmc.player.Player.$(player)] Pos[1] double 0.01 run data get entity @s Pos[1] 100
+$execute if score @s lcmc.logic.onGroundCurr matches 1 store result entity @n[tag=lcmc.player.logic.FallMarker,tag=lcmc.player.Player.$(player)] Pos[1] double 0.01 run data get entity @s Pos[1] 100
 execute if score @s lcmc.logic.onGroundCurr matches 1 run scoreboard players set @s lcmc.player.fallTime 0
 execute if score @s lcmc.player.fallVelocity matches 0.. run scoreboard players set @s lcmc.player.fallTime 0
+$tp @n[tag=lcmc.player.logic.FallMarker,tag=lcmc.player.Player.$(player)] 0 0 0
 
-# Fear
+## Movement
+scoreboard players set @s lcmc.player.logic.movingCheck 0
+execute if predicate lcmc:player/logic/forward run scoreboard players set @s lcmc.player.logic.movingCheck 1
+execute if predicate lcmc:player/logic/backward run scoreboard players set @s lcmc.player.logic.movingCheck 1
+execute if predicate lcmc:player/logic/left run scoreboard players set @s lcmc.player.logic.movingCheck 1
+execute if predicate lcmc:player/logic/right run scoreboard players set @s lcmc.player.logic.movingCheck 1
+
+execute unless predicate lcmc:player/logic/forward run attribute @s minecraft:movement_speed base set 0.08
+execute if predicate lcmc:player/logic/forward run attribute @s minecraft:movement_speed base set 0.1
+
+execute if predicate lcmc:player/logic/sprint if score @s lcmc.player.stamina matches 21.. run attribute @s minecraft:movement_speed modifier add sprint-modifier 0.04 add_value
+execute unless predicate lcmc:player/logic/sprint run attribute @s minecraft:movement_speed modifier remove sprint-modifier
+execute if score @s lcmc.player.stamina matches 0 run attribute @s minecraft:movement_speed modifier remove sprint-modifier
+
+execute as @s[scores={lcmc.logic.onGroundPrev=1,lcmc.player.logic.jumpTimer=0},predicate=lcmc:player/logic/jump] run scoreboard players set @s lcmc.player.logic.jumpTimer 7
+execute as @s[scores={lcmc.player.logic.jumpTimer=3}] at @s run effect give @s minecraft:levitation infinite 20 true
+execute as @s[scores={lcmc.player.logic.jumpTimer=1}] at @s run effect clear @s minecraft:levitation
+execute as @s[scores={lcmc.player.logic.jumpTimer=1..}] run scoreboard players remove @s lcmc.player.logic.jumpTimer 1
+execute if predicate lcmc:player/logic/jump if score @s lcmc.logic.onGroundCurr matches 1 if score @s lcmc.player.stamina matches 11.. run scoreboard players remove @s lcmc.player.stamina 10
+
+
+execute if predicate lcmc:player/logic/sprint if score @s lcmc.player.logic.movingCheck matches 1 if score @s lcmc.player.stamina matches 1.. run scoreboard players remove @s lcmc.player.stamina 1
+execute unless predicate lcmc:player/logic/sprint if score @s lcmc.player.logic.movingCheck matches 0 if score @s lcmc.player.stamina matches ..99 run scoreboard players add @s lcmc.player.stamina 2
+execute unless predicate lcmc:player/logic/sprint if score @s lcmc.player.logic.movingCheck matches 1 if score @s lcmc.player.stamina matches ..99 run scoreboard players add @s lcmc.player.stamina 1
+
+execute if score @s lcmc.player.stamina matches 101.. run scoreboard players set @s lcmc.player.stamina 100
+
+## Fear
 execute if score @s lcmc.player.fear matches 101.. run scoreboard players set @s lcmc.player.fear 100
 
 execute if score @s lcmc.player.logic.fearDecrease matches ..0 run scoreboard players remove @s lcmc.player.fear 55
 execute if score @s lcmc.player.logic.fearDecrease matches ..0 run scoreboard players set @s lcmc.player.logic.fearDecrease 21
 scoreboard players remove @s lcmc.player.logic.fearDecrease 1
 
-# Insanity
+## Insanity
 
 execute if score playerCount lcmc.game.gameState matches 1 if score @s lcmc.player.logic.insanityIncrease matches ..0 if score @s lcmc.player.location matches 0 run scoreboard players add @s lcmc.player.insanity 125
 execute if score playerCount lcmc.game.gameState matches 1 if score @s lcmc.player.logic.insanityIncrease matches ..0 if score @s lcmc.player.location matches 1 run scoreboard players add @s lcmc.player.insanity 500
@@ -42,7 +80,7 @@ execute if score @s lcmc.player.logic.insanityIncrease matches ..0 run scoreboar
 scoreboard players remove @s lcmc.player.logic.insanityIncrease 1
 
 
-# Inventory
+## Inventory
 
 execute if score @s lcmc.player.selectedInventorySlot matches 1 run item replace entity @s enderchest.0 from entity @s weapon.mainhand
 execute if score @s lcmc.player.selectedInventorySlot matches 2 run item replace entity @s enderchest.1 from entity @s weapon.mainhand
@@ -87,17 +125,17 @@ execute unless score @s lcmc.player.previousSlot = @s lcmc.player.math.currentSl
 
 function lcmc:player/logic/inventory/store_inv_in_hotbar
 
-# Interacting
+## Interacting
 execute if score @s lcmc.player.logic.currInteract matches 1.. run function lcmc:player/interact/tick
 #title @s actionbar {"score": {"name": "@s","objective": "lcmc.player.logic.currInteract"}, "extra": [{"score": {"name": "@s","objective": "lcmc.player.logic.currInteract"}}]}
 
-# Healing
+## Healing
 execute if score @s lcmc.player.healCooldown matches 1.. if score @s lcmc.player.health matches 1..19 run scoreboard players remove @s lcmc.player.healCooldown 1
 execute if score @s lcmc.player.health matches 1..19 unless score @s lcmc.player.healCooldown matches 1.. run scoreboard players add @s lcmc.player.health 1
 execute if score @s lcmc.player.health matches 1..19 if score @s lcmc.player.healCooldown matches 0 run scoreboard players set @s lcmc.player.healCooldown 20
 execute if score @s lcmc.player.health matches 20.. if score @s lcmc.player.healCooldown matches 0 run scoreboard players set @s lcmc.player.healCooldown 20
 
-# Grab Item Tip
+## Grab Item Tip
 tag @s add lcmc.item.player.rayCasting
 execute at @s if predicate lcmc:player/look_at_item anchored eyes positioned ^ ^ ^.1 run function lcmc:player/logic/item/distance_raycast
 scoreboard players set .hit lcmc.player.logic.raycast 0

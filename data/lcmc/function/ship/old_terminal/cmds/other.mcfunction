@@ -1,0 +1,1 @@
+data modify entity @e[tag=TerminalDisplayText,limit=1] text set value '{"text":"---------------------------------\\n\\n\\n","color":"green","extra":[{"text":"Other commands:\\n\\n>PING [Radar]\\nTo make your booster play a sound.\\n\\n>TRANSMIT [message]\\nTo transmit a message shorter than 10 characters.\\n\\n>SCAN\\nTo list remaining Scrap.\\n\\n\\n\\n\\n\\n\\n\\n"}]}'
