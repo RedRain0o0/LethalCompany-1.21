@@ -4,7 +4,7 @@ execute \
 
 execute \
   if score onBridge lcmc.game.gameState matches 0 \
-  unless entity @e[tag=lcmc.entity.ForestKeeper.Root,tag=lcmc.ai.Alive,predicate=lcmc:moon/test_bridge] \
+  unless entity @e[type=marker,tag=lcmc.entity.ForestKeeper.Root,tag=lcmc.ai.Alive,predicate=lcmc:moon/test_bridge] \
   if score testBridgeHealth lcmc.game.gameState matches 1..9999 \
   run scoreboard players add testBridgeHealth lcmc.game.gameState 2000
 

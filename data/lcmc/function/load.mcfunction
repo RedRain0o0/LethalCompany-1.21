@@ -2,7 +2,7 @@ tellraw @a[tag=Debug] "<Server> Started loading `load.mcfunction`"
 
 
 
-# Player
+## Player
 scoreboard objectives add lcmc.player.twoHand dummy
 scoreboard objectives add lcmc.player.health dummy
 scoreboard objectives add lcmc.player.healCooldown dummy
@@ -32,12 +32,12 @@ scoreboard objectives add lcmc.player.slot4Battery dummy
 
 scoreboard objectives add lcmc.display.apparatusPull dummy
 
-# Traps
+## Traps
 scoreboard objectives add lcmc.logic.id dummy
 scoreboard objectives add lcmc.trap.landmine.beepTimer dummy
 scoreboard objectives add lcmc.trap.landmine.explodeTimer dummy
 
-# Math/Logic
+## Math/Logic
 scoreboard objectives add lcmc.logic.onGroundCurr dummy
 scoreboard objectives add lcmc.logic.onGroundPrev dummy
 scoreboard objectives add lcmc.game.time dummy
@@ -90,7 +90,11 @@ scoreboard objectives add lcmc.trap.logic.prevLandMine dummy
 scoreboard objectives add lcmc.trap.logic.currLandMine dummy
 #scoreboard objectives add lcmc.item.logic.flashLight dummy
 
-# Enemies
+## Entities
+scoreboard objectives add lcmc.entity.player dummy
+scoreboard players set eyeOffset lcmc.entity.player 1625
+scoreboard players set eyeOffsetCrouched lcmc.entity.player 1275
+
 scoreboard objectives add lcmc.entity.eyelessDog dummy
 scoreboard players set var lcmc.entity.eyelessDog 0
 scoreboard objectives add lcmc.eyelessDog.listenerCooldown dummy
@@ -98,6 +102,9 @@ scoreboard objectives add lcmc.eyelessDog.hasHeard dummy
 scoreboard objectives add lcmc.eyelessDog.soundCoords.X dummy
 scoreboard objectives add lcmc.eyelessDog.soundCoords.Y dummy
 scoreboard objectives add lcmc.eyelessDog.soundCoords.Z dummy
+
+scoreboard objectives add lcmc.entity.masked dummy
+scoreboard players set eyeOffset lcmc.entity.masked 1625
 
 scoreboard objectives add lcmc.entity.coilhead dummy
 scoreboard players set attackDamage lcmc.entity.coilhead 90
@@ -132,7 +139,7 @@ scoreboard objectives add lcmc.entity.ai.lookingForPath dummy
 scoreboard objectives add lcmc.entity.ai.canSeeNext dummy
 scoreboard objectives add lcmc.entity.ai.pathIndex dummy
 
-# Ship
+## Ship
 scoreboard objectives add lcmc.ship.map.targetPosition dummy
 scoreboard objectives add lcmc.ship.map.nextMonitor dummy
 scoreboard objectives add lcmc.ship.map dummy
@@ -143,25 +150,25 @@ scoreboard objectives add lcmc.ship.signalTransmitter dummy
 scoreboard objectives add lcmc.ship.loudHorn dummy
 scoreboard objectives add lcmc.ship.transmitter dummy
 
-# Triggers
+## Triggers
 scoreboard objectives add lcmc.player.action.dance trigger
 scoreboard objectives add lcmc.player.action.point trigger
 
-# Moons
+## Moons
 scoreboard objectives add lcmc.moon.test dummy
 
 scoreboard objectives add lcmc.moon.experimentation dummy
 scoreboard players set variable lcmc.moon.experimentation 0
 
-# Items
+## Items
 scoreboard objectives add lcmc.item.metalSheet dummy
 
-# Player Count
+## Player Count
 scoreboard objectives add lcmc.player.leaveGame custom:leave_game
 scoreboard players reset playerCount lcmc.game.gameState
 scoreboard players set onMoon lcmc.game.gameState 0
 
-# Keyboard
+## Keyboard
 scoreboard objectives add 1 trigger
 scoreboard objectives add 2 trigger
 scoreboard objectives add 3 trigger
@@ -206,7 +213,7 @@ scoreboard objectives add exit trigger
 
 
 
-# Boss Bars
+## Boss Bars
 bossbar add lcmc:game.logic.time {"text": "Time of Day"}
 bossbar add lcmc:player.gui.1 {"text": "\u0001","font": "lcmc:inventory"}
 bossbar add lcmc:player.gui.2 {"text": "Battery"}
@@ -215,65 +222,14 @@ bossbar add lcmc:player.gui.4 {"text": "Battery"}
 bossbar add lcmc:player.transmitter {"text": ""}
 bossbar add lcmc:player.transmitter.decoration {"translate":"space.270","color":"#4e5c24","extra":[{"text":"\uf001\uf002","font":"lcmc:transmitter"},{"translate":"space.-500","font":"default"},{"text":"\uf003","font":"lcmc:transmitter"},{"translate":"space.-1","font":"default"},{"text":"\uf003","font":"lcmc:transmitter"},{"translate":"space.-1","font":"default"},{"text":"\uf003","font":"lcmc:transmitter"},{"translate":"space.-1","font":"default"},{"text":"\uf003","font":"lcmc:transmitter"},{"translate":"space.-1","font":"default"},{"text":"\uf003","font":"lcmc:transmitter"},{"translate":"space.-1","font":"default"},{"text":"\uf003","font":"lcmc:transmitter"}]}
 
-# FOV Marker
+## FOV Marker
 kill @e[tag=lcmc.logic.FOVMarker]
 execute in minecraft:overworld run summon marker ~ ~ ~ {Tags:['lcmc.logic.FOVMarker','lcmc.logic.GameLogic']}
 
 kill @e[tag=lcmc.logic.Collected]
 summon item_display 0 0 0 {Tags:['lcmc.logic.Collected'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Collected:1b}}}}
 
-kill @e[tag=lcmc.logic.TimeStrings]
-
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.signature.AM'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Signature:'{"text":"\\u0101"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.signature.PM'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Signature:'{"text":"\\u0102"}'}}}}
-
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.hours.1'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u0301"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.hours.2'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u0302"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.hours.3'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u0303"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.hours.4'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u0304"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.hours.5'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u0305"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.hours.6'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u0306"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.hours.7'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u0307"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.hours.8'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u0308"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.hours.9'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u0309"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.hours.10'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u0310"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.hours.11'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u0311"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.hours.12'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u0312"}'}}}}
-
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.1.0'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1100"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.1.1'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1101"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.1.2'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1102"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.1.3'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1103"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.1.4'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1104"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.1.5'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1105"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.1.6'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1106"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.1.7'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1107"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.1.8'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1108"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.1.9'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1109"}'}}}}
-
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.2.0'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1200"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.2.1'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1201"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.2.2'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1202"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.2.3'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1203"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.2.4'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1204"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.2.5'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1205"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.2.6'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1206"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.2.7'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1207"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.2.8'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1208"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.2.9'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1209"}'}}}}
-
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.3.0'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1300"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.3.1'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1301"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.3.2'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1302"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.3.3'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1303"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.3.4'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1304"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.3.5'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1305"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.3.6'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1306"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.3.7'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1307"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.3.8'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1308"}'}}}}
-summon item_display 0 0 0 {Tags:['lcmc.logic.TimeStrings','lcmc.logic.minutes.3.9'],item:{id:"minecraft:bone",count:1,components:{"minecraft:custom_data":{Time:'{"text":"\\u1309"}'}}}}
-
-# Map Detectors
+## Map Detectors
 kill @e[tag=lcmc.ship.map.Marker]
 summon marker 0 0 0 {Tags:['lcmc.ship.map.Marker','lcmc.ship.map.Marker.X0Y0Z0']}
 summon marker 0 0 0 {Tags:['lcmc.ship.map.Marker','lcmc.ship.map.Marker.X1Y0Z0']}
@@ -356,13 +312,13 @@ summon block_display 0.5 -58 20.0 {width:0.1f,height:0.1f,Tags:["lcmc.ship.map.D
 summon block_display 0.25 -58 20.0 {width:0.1f,height:0.1f,Tags:["lcmc.ship.map.Display","lcmc.ship.map.Display.World","lcmc.ship.map.Display.X3Y0Z4"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[0f,0f,0f],scale:[0.25f,0.25f,0.25f]}}
 summon block_display 0.0 -58 20.0 {width:0.1f,height:0.1f,Tags:["lcmc.ship.map.Display","lcmc.ship.map.Display.World","lcmc.ship.map.Display.X4Y0Z4"],transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[0f,0f,0f],scale:[0.25f,0.25f,0.25f]}}
 
-# Player Fall Markers
+## Player Fall Markers
 summon marker 0 0 0 {Tags:['lcmc.player.logic.FallMarker','lcmc.player.Player.1']}
 summon marker 0 0 0 {Tags:['lcmc.player.logic.FallMarker','lcmc.player.Player.2']}
 summon marker 0 0 0 {Tags:['lcmc.player.logic.FallMarker','lcmc.player.Player.3']}
 summon marker 0 0 0 {Tags:['lcmc.player.logic.FallMarker','lcmc.player.Player.4']}
 
-# Inventory Items
+## Inventory Items
 kill @e[tag=InventoryEntity]
 summon item_display 0 0 0 {Tags:['lcmc.player.inventory.InventoryEntity','lcmc.player.Player.1','lcmc.player.inventory.Slot1']}
 summon item_display 0 0 0 {Tags:['lcmc.player.inventory.InventoryEntity','lcmc.player.Player.1','lcmc.player.inventory.Slot2']}
