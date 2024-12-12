@@ -3,8 +3,8 @@ tag @s add lcmc.player.Alive
 tag @s add lcmc.ship.map.CanTarget
 tag @s add lcmc.ship.teleporter.CanTeleport
 tag @s add lcmc.trap.landmine.CanDetonate
-attribute @s minecraft:generic.knockback_resistance base set 1
-attribute @s minecraft:player.entity_interaction_range base set 0.25
+attribute @s minecraft:knockback_resistance base set 1
+attribute @s minecraft:entity_interaction_range base set 0.25
 effect give @s resistance infinite 255 true
 effect give @s invisibility infinite 255 true
 item replace entity @s armor.feet with chainmail_boots

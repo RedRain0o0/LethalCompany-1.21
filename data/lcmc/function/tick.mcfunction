@@ -20,6 +20,9 @@ execute if score endTimer lcmc.ship.transmitter matches 1 run function lcmc:ship
 execute if score endTimer lcmc.ship.transmitter matches 6 as @a at @s run playsound lcmc:player.signal_transmitter.finish player @s ~ ~ ~
 execute if score endTimer lcmc.ship.transmitter matches 1.. run scoreboard players remove endTimer lcmc.ship.transmitter 1
 
+## Masked Logic
+execute as @e[type=minecraft:block_display,tag=lcmc.entity.masked.Root] at @s run function lcmc:entity/masked/tick
+
 ## Eyeless Dog Logic
 #execute as @e[tag=lcmc.entity.eyelessDog.Listener] unless score @s lcmc.eyelessDog.listenerCooldown matches 1.. run function lcmc:entity/eyelessdog/listener_location
 #execute as @e[tag=lcmc.entity.eyelessDog.Listener] if score @s lcmc.eyelessDog.listenerCooldown matches 1.. run scoreboard players remove @s lcmc.eyelessDog.listenerCooldown 1

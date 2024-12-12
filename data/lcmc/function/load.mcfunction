@@ -91,6 +91,10 @@ scoreboard objectives add lcmc.trap.logic.currLandMine dummy
 #scoreboard objectives add lcmc.item.logic.flashLight dummy
 
 ## Entities
+scoreboard objectives add lcmc.entity.generic.rotation.X dummy
+scoreboard objectives add lcmc.entity.generic.rotation.Y dummy
+
+
 scoreboard objectives add lcmc.entity.player dummy
 scoreboard players set eyeOffset lcmc.entity.player 1625
 scoreboard players set eyeOffsetCrouched lcmc.entity.player 1275
