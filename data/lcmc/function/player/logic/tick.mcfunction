@@ -24,10 +24,12 @@ execute if predicate lcmc:player/logic/backward run scoreboard players set @s lc
 execute if predicate lcmc:player/logic/left run scoreboard players set @s lcmc.player.logic.movingCheck 1
 execute if predicate lcmc:player/logic/right run scoreboard players set @s lcmc.player.logic.movingCheck 1
 
-execute unless predicate lcmc:player/logic/forward run attribute @s minecraft:movement_speed base set 0.08
-execute if predicate lcmc:player/logic/forward run attribute @s minecraft:movement_speed base set 0.1
+execute as @s[tag=!lcmc.player.logic.Immobilized] unless predicate lcmc:player/logic/forward run attribute @s minecraft:movement_speed base set 0.08
+execute as @s[tag=!lcmc.player.logic.Immobilized] if predicate lcmc:player/logic/forward run attribute @s minecraft:movement_speed base set 0.1
 
-execute if predicate lcmc:player/logic/sprint if score @s lcmc.player.stamina matches 21.. run attribute @s minecraft:movement_speed modifier add sprint-modifier 0.04 add_value
+execute as @s[tag=lcmc.player.status.Hindered] if score @s lcmc.player.logic.movingCheck matches 1 run scoreboard players remove @s lcmc.player.stamina 22
+
+execute if predicate lcmc:player/logic/sprint if score @s lcmc.player.stamina matches 2001.. run attribute @s minecraft:movement_speed modifier add sprint-modifier 0.04 add_value
 execute unless predicate lcmc:player/logic/sprint run attribute @s minecraft:movement_speed modifier remove sprint-modifier
 execute if score @s lcmc.player.stamina matches 0 run attribute @s minecraft:movement_speed modifier remove sprint-modifier
 
@@ -35,14 +37,14 @@ execute as @s[scores={lcmc.logic.onGroundPrev=1,lcmc.player.logic.jumpTimer=0},p
 execute as @s[scores={lcmc.player.logic.jumpTimer=3}] at @s run effect give @s minecraft:levitation infinite 20 true
 execute as @s[scores={lcmc.player.logic.jumpTimer=1}] at @s run effect clear @s minecraft:levitation
 execute as @s[scores={lcmc.player.logic.jumpTimer=1..}] run scoreboard players remove @s lcmc.player.logic.jumpTimer 1
-execute if predicate lcmc:player/logic/jump if score @s lcmc.logic.onGroundCurr matches 1 if score @s lcmc.player.stamina matches 11.. run scoreboard players remove @s lcmc.player.stamina 10
+execute if predicate lcmc:player/logic/jump if score @s lcmc.logic.onGroundCurr matches 1 if score @s lcmc.player.stamina matches 11.. run scoreboard players remove @s lcmc.player.stamina 800
 
 
-execute if predicate lcmc:player/logic/sprint if score @s lcmc.player.logic.movingCheck matches 1 if score @s lcmc.player.stamina matches 1.. run scoreboard players remove @s lcmc.player.stamina 1
-execute unless predicate lcmc:player/logic/sprint if score @s lcmc.player.logic.movingCheck matches 0 if score @s lcmc.player.stamina matches ..99 run scoreboard players add @s lcmc.player.stamina 2
-execute unless predicate lcmc:player/logic/sprint if score @s lcmc.player.logic.movingCheck matches 1 if score @s lcmc.player.stamina matches ..99 run scoreboard players add @s lcmc.player.stamina 1
+execute if predicate lcmc:player/logic/sprint if score @s lcmc.player.logic.movingCheck matches 1 if score @s lcmc.player.stamina matches 1.. run scoreboard players remove @s lcmc.player.stamina 50
+execute as @s[tag=!lcmc.player.status.Hindered] unless predicate lcmc:player/logic/sprint if score @s lcmc.player.logic.movingCheck matches 0 if score @s lcmc.player.stamina matches ..9999 run scoreboard players add @s lcmc.player.stamina 55
+execute as @s[tag=!lcmc.player.status.Hindered] unless predicate lcmc:player/logic/sprint if score @s lcmc.player.logic.movingCheck matches 1 if score @s lcmc.player.stamina matches ..9999 run scoreboard players add @s lcmc.player.stamina 35
 
-execute if score @s lcmc.player.stamina matches 101.. run scoreboard players set @s lcmc.player.stamina 100
+execute if score @s lcmc.player.stamina matches 10001.. run scoreboard players set @s lcmc.player.stamina 10000
 
 ## Fear
 execute if score @s lcmc.player.fear matches 101.. run scoreboard players set @s lcmc.player.fear 100

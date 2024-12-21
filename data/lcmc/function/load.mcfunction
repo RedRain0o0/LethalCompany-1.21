@@ -65,11 +65,13 @@ scoreboard players set 61 lcmc.math.numbers 61
 scoreboard players set 90 lcmc.math.numbers 90
 scoreboard players set 100 lcmc.math.numbers 100
 scoreboard players set 105 lcmc.math.numbers 105
+scoreboard players set 125 lcmc.math.numbers 125
 scoreboard players set 180 lcmc.math.numbers 180
 scoreboard players set 300 lcmc.math.numbers 300
 scoreboard players set 900 lcmc.math.numbers 900
 scoreboard players set 1000 lcmc.math.numbers 1000
 scoreboard players set 1800 lcmc.math.numbers 1800
+scoreboard players set 3600 lcmc.math.numbers 3600
 scoreboard objectives add lcmc.player.math.previousSlot dummy
 scoreboard objectives add lcmc.player.math.currentSlot dummy
 scoreboard objectives add lcmc.player.logic.raycast dummy
@@ -93,6 +95,7 @@ scoreboard objectives add lcmc.trap.logic.currLandMine dummy
 ## Entities
 scoreboard objectives add lcmc.entity.generic.rotation.X dummy
 scoreboard objectives add lcmc.entity.generic.rotation.Y dummy
+scoreboard objectives add lcmc.entity.generic.phase dummy
 
 
 scoreboard objectives add lcmc.entity.player dummy
@@ -108,6 +111,9 @@ scoreboard objectives add lcmc.eyelessDog.soundCoords.Y dummy
 scoreboard objectives add lcmc.eyelessDog.soundCoords.Z dummy
 
 scoreboard objectives add lcmc.entity.masked dummy
+scoreboard objectives add lcmc.masked.stopAndStare dummy
+scoreboard objectives add lcmc.masked.targetRange dummy
+scoreboard objectives add lcmc.masked.targetRangePrev dummy
 scoreboard players set eyeOffset lcmc.entity.masked 1625
 
 scoreboard objectives add lcmc.entity.coilhead dummy

@@ -1,0 +1,1 @@
+execute store result score @s lcmc.masked.stopAndStare run random value 60..100
